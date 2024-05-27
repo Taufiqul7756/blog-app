@@ -45,7 +45,7 @@ const Navbar = () => {
           : "bg-[#081939] backdrop-blur-sm shadow-md "
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <Link href="/" className="text-xl font-bold">
@@ -67,26 +67,28 @@ const Navbar = () => {
                     : ""
                 }`}
               >
-                Services & Benefits
-              </Link>
-              <Link
-                href="/cart"
-                className={`text-white hover:text-white  py-2  text-sm font-medium ${
-                  pathname === "/cart"
-                    ? " border-b-2 border-yellow-500 text-yellow-500"
-                    : ""
-                }`}
-              >
                 Blog
               </Link>
             </div>
           </div>
-          <div className="hidden sm:block ">
+          <div className="hidden md:block ">
             <Link
               href="/login"
-              className={`text-white hover:text-white bg-[#525CEB] px-4 py-2 rounded-md text-sm font-medium`}
+              className={`text-white hover:text-white border-yellow-500 border px-4 py-2 rounded-full text-sm font-medium`}
             >
-              LOGIN
+              Download App
+            </Link>
+            <Link
+              href="/login"
+              className={`text-white hover:text-white  px-4 py-2 rounded-full text-sm font-medium`}
+            >
+              <span className="text-yellow-500">English</span> | বাংলা
+            </Link>
+            <Link
+              href="/login"
+              className={`text-white hover:text-white  px-4 py-2 rounded-full text-sm font-medium`}
+            >
+              +8801634139003
             </Link>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -116,28 +118,7 @@ const Navbar = () => {
                 pathname === "/" ? " border-b-4" : ""
               }`}
             >
-              Products
-            </Link>
-            <Link
-              onClick={closeNavbar}
-              href="/cart"
-              className={`text-${
-                scrolling ? "white" : "black"
-              } hover:text-white bg-slate-400 block px-3 py-2 rounded-md text-base font-medium ${
-                pathname === "/cart" ? " border-b-4" : ""
-              }`}
-            >
-              Cart
-            </Link>
-
-            <Link
-              onClick={closeNavbar}
-              href="/login"
-              className={`text-${
-                scrolling ? "white" : "black"
-              } hover:text-white  block px-3 bg-blue-600 py-2 rounded-md text-base font-medium`}
-            >
-              LOGIN
+              Blog
             </Link>
           </div>
         </div>
