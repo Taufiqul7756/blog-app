@@ -73,19 +73,19 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block ">
             <Link
-              href="/login"
+              href="/"
               className={`text-white hover:text-white border-yellow-500 border px-4 py-2 rounded-full text-sm font-medium`}
             >
               Download App
             </Link>
             <Link
-              href="/login"
+              href="/"
               className={`text-white hover:text-white  px-4 py-2 rounded-full text-sm font-medium`}
             >
               <span className="text-yellow-500">English</span> | বাংলা
             </Link>
             <Link
-              href="/login"
+              href="/"
               className={`text-white hover:text-white  px-4 py-2 rounded-full text-sm font-medium`}
             >
               +8801634139003

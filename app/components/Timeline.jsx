@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsAndUsers } from "../redux/postSlice";
 import { fetchCommentsByPostId } from "../redux/commentsSlice";
+import { SlLike } from "react-icons/sl";
+import { SlDislike } from "react-icons/sl";
 
 const Timeline = () => {
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ const Timeline = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className=" p-4">
+    <div className="px-4">
       {posts.map((post) => (
         <div key={post.id} className=" bg-white p-4 rounded shadow mb-4">
           <div className="grid gap-2">
@@ -45,19 +47,30 @@ const Timeline = () => {
             {showComments[post.id] ? "Hide Comments" : "Show Comments"}
           </button>
           {showComments[post.id] && (
-            <div className="mt-4">
+            <div className=" mt-4">
               {comments[post.id] ? (
                 comments[post.id].map((comment) => (
-                  <div key={comment.id} className="px-5 py-2 border-t">
-                    <small className="text-gray-500 text-xl">
-                      {" "}
-                      {comment.name}
-                    </small>
-                    <p className="text-gray-800 text-lg">{comment.body}</p>
+                  <div
+                    key={comment.id}
+                    className="grid gap-2 px-5 py-2 border-t"
+                  >
+                    <div className="flex justify-between items-center">
+                      <small className="text-gray-500 text-xl">
+                        {" "}
+                        {comment.name}
+                      </small>
+                      <div className="flex gap-3 justify-center items-center">
+                        <SlLike className="text-lg" />
+                        <SlDislike className="text-lg" />
+                      </div>
+                    </div>
+                    <p className="text-gray-800 text-lg font-normal">
+                      {comment.body}
+                    </p>
                   </div>
                 ))
               ) : (
-                <div>Loading comments...</div>
+                <div className="text-lg">Loading comments...</div>
               )}
             </div>
           )}
