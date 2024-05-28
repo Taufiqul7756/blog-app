@@ -82,7 +82,7 @@ const Timeline = () => {
             </button>
           </div>
           {showComments[post.id] && (
-            <div className="mt-4">
+            <div className="mt-4 px-10">
               {comments[post.id] ? (
                 comments[post.id].map((comment) => (
                   <div
@@ -90,9 +90,9 @@ const Timeline = () => {
                     className="grid gap-2 px-10 py-3 border-t"
                   >
                     <div className="flex justify-between items-center">
-                      <small className="text-gray-500 text-xl">
+                      <span className="text-blue-400 text-lg">
                         {comment.name}
-                      </small>
+                      </span>
                       <div className="flex gap-5 justify-center items-center">
                         <SlLike
                           className={`text-lg cursor-pointer ${
@@ -108,7 +108,7 @@ const Timeline = () => {
                         />
                       </div>
                     </div>
-                    <p className="text-gray-800 text-lg font-normal">
+                    <p className="text-gray-800 text-base font-normal">
                       {comment.body}
                     </p>
                   </div>
