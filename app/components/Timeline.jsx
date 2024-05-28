@@ -6,6 +6,8 @@ import { fetchPostsAndUsers, setPage } from "../redux/postSlice";
 import { fetchCommentsByPostId } from "../redux/commentsSlice";
 import { getPaginationControls } from "../utils/pagination";
 import { SlLike, SlDislike } from "react-icons/sl";
+import { FaCommentAlt } from "react-icons/fa";
+import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 
 const Timeline = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,14 @@ const Timeline = () => {
   useEffect(() => {
     dispatch(fetchPostsAndUsers(page));
   }, [dispatch, page]);
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      posts.forEach((post) => {
+        dispatch(fetchCommentsByPostId(post.id));
+      });
+    }
+  }, [dispatch, posts]);
 
   const toggleComments = (postId) => {
     setShowComments((prevState) => ({
@@ -76,16 +86,29 @@ const Timeline = () => {
                 </span>
               </div>
               <div className="flex justify-between items-center mt-3">
-                <span className="text-sm font-bold ">
+                <div className="text-sm font-bold ">
                   <span className="text-blue-500">Author: </span>{" "}
                   {post.userName}
-                </span>
-                <button
-                  onClick={() => toggleComments(post.id)}
-                  className="text-blue-500 text-sm underline mt-2"
-                >
-                  {showComments[post.id] ? "Hide Comments" : "Show Comments"}
-                </button>
+                </div>
+                <div className="flex justify-center items-center gap-2">
+                  <div className="flex justify-center items-center gap-3">
+                    <FaCommentAlt className="text-sm" />
+                    <span className="text-sm">
+                      Comments (
+                      {comments[post.id] ? comments[post.id].length : 0})
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => toggleComments(post.id)}
+                    className=" text-xl font-bold cursor-pointer"
+                  >
+                    {showComments[post.id] ? (
+                      <TiArrowSortedUp className=" " />
+                    ) : (
+                      <TiArrowSortedDown className=" " />
+                    )}
+                  </button>
+                </div>
               </div>
               {showComments[post.id] && (
                 <div className="mt-4 px-10">
