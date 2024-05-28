@@ -7,7 +7,7 @@ import Timeline from "./components/Timeline.jsx";
 export default function Home() {
   return (
     <Provider store={store}>
-      <div className="flex font-bold text-3xl min-h-screen flex-col items-center justify-between py-16 px-32">
+      <div className="flex font-bold text-3xl min-h-screen flex-col items-center justify-between py-16">
         <Timeline />
       </div>
     </Provider>

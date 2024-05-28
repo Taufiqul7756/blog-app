@@ -1,11 +1,9 @@
-"use client";
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl, getRequest } from "../utils/service";
 
 export const fetchPostsAndUsers = createAsyncThunk(
   "posts/fetchPostsAndUsers",
-  async () => {
+  async (page, { getState }) => {
     const postsResponse = await getRequest(`${baseUrl}/posts`);
     const usersResponse = await getRequest(`${baseUrl}/users`);
 
@@ -21,9 +19,18 @@ export const fetchPostsAndUsers = createAsyncThunk(
       return { ...post, userName: user ? user.name : "Unknown User" };
     });
 
-    combinedData.sort((a, b) => b.id - a.id);
+    combinedData.sort((a, b) => b.id - a.id); // Sorting in descending order by post ID
 
-    return combinedData;
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil(combinedData.length / itemsPerPage);
+    const currentPage = page || getState().posts.page;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedData = combinedData.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
+
+    return { posts: paginatedData, totalPages };
   }
 );
 
@@ -33,8 +40,14 @@ const postsSlice = createSlice({
     posts: [],
     loading: false,
     error: null,
+    page: 1,
+    totalPages: 1,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPostsAndUsers.pending, (state) => {
@@ -42,7 +55,8 @@ const postsSlice = createSlice({
       })
       .addCase(fetchPostsAndUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = action.payload;
+        state.posts = action.payload.posts;
+        state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchPostsAndUsers.rejected, (state, action) => {
         state.loading = false;
@@ -50,5 +64,7 @@ const postsSlice = createSlice({
       });
   },
 });
+
+export const { setPage } = postsSlice.actions;
 
 export default postsSlice.reducer;
