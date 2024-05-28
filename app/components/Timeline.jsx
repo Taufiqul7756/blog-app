@@ -80,7 +80,7 @@ const Timeline = () => {
             <div key={post.id} className="bg-white p-4 rounded shadow mb-4">
               <div className="grid gap-2">
                 <h3 className="text-xl font-bold font-sans">
-                  Title: {post.title}
+                  <span className="text-blue-500">Title:</span> {post.title}
                 </h3>
                 <span className="text-lg font-normal">
                   <span className="font-bold text-base font-serif ">
