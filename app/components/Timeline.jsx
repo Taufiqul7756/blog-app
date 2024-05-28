@@ -58,73 +58,85 @@ const Timeline = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div className="lg:px-32 md:px-10 sm:px-5 w-2/3">
-      {posts.map((post) => (
-        <div key={post.id} className="bg-white p-4 rounded shadow mb-4">
-          <div className="grid gap-2">
-            <h3 className="text-xl font-bold">Title: {post.title}</h3>
-            <span className="text-lg font-normal">
-              <span className="font-bold text-base">Description:</span>{" "}
-              {post.body}
-            </span>
-          </div>
-          <div className="flex justify-between items-center mt-3">
-            <span className="text-sm font-bold ">Author: {post.userName}</span>
-            <button
-              onClick={() => toggleComments(post.id)}
-              className="text-blue-500 text-sm underline mt-2"
-            >
-              {showComments[post.id] ? "Hide Comments" : "Show Comments"}
-            </button>
-          </div>
-          {showComments[post.id] && (
-            <div className="mt-4 px-10">
-              {comments[post.id] ? (
-                comments[post.id].map((comment) => (
-                  <div
-                    key={comment.id}
-                    className="grid gap-2 px-10 py-3 border-t"
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-blue-400 text-lg">
-                        {comment.name}
-                      </span>
-                      <div className="flex gap-5 justify-center items-center">
-                        <SlLike
-                          className={`text-lg cursor-pointer ${
-                            likedComments[comment.id] ? "text-blue-500" : ""
-                          }`}
-                          onClick={() => toggleLike(comment.id)}
-                        />
-                        <SlDislike
-                          className={`text-lg cursor-pointer ${
-                            dislikedComments[comment.id] ? "text-red-500" : ""
-                          }`}
-                          onClick={() => toggleDislike(comment.id)}
-                        />
+    <div className="w-2/3">
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <>
+          {posts.map((post) => (
+            <div key={post.id} className="bg-white p-4 rounded shadow mb-4">
+              <div className="grid gap-2">
+                <h3 className="text-xl font-bold">Title: {post.title}</h3>
+                <span className="text-lg font-normal">
+                  <span className="font-bold text-base">Description:</span>{" "}
+                  {post.body}
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-sm font-bold ">
+                  <span className="text-blue-500">Author: </span>{" "}
+                  {post.userName}
+                </span>
+                <button
+                  onClick={() => toggleComments(post.id)}
+                  className="text-blue-500 text-sm underline mt-2"
+                >
+                  {showComments[post.id] ? "Hide Comments" : "Show Comments"}
+                </button>
+              </div>
+              {showComments[post.id] && (
+                <div className="mt-4 px-10">
+                  {comments[post.id] ? (
+                    comments[post.id].map((comment) => (
+                      <div
+                        key={comment.id}
+                        className="grid gap-2 px-10 py-3 border-t"
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className="text-blue-400 text-lg">
+                            {comment.name}
+                          </span>
+                          <div className="flex gap-5 justify-center items-center">
+                            <SlLike
+                              className={`text-lg cursor-pointer ${
+                                likedComments[comment.id] ? "text-blue-500" : ""
+                              }`}
+                              onClick={() => toggleLike(comment.id)}
+                            />
+                            <SlDislike
+                              className={`text-lg cursor-pointer ${
+                                dislikedComments[comment.id]
+                                  ? "text-red-500"
+                                  : ""
+                              }`}
+                              onClick={() => toggleDislike(comment.id)}
+                            />
+                          </div>
+                        </div>
+                        <p className="text-gray-800 text-base font-normal">
+                          {comment.body}
+                        </p>
                       </div>
-                    </div>
-                    <p className="text-gray-800 text-base font-normal">
-                      {comment.body}
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <div className="text-lg">Loading comments...</div>
+                    ))
+                  ) : (
+                    <div className="text-lg">Loading comments...</div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+          {!loading && totalPages > 1 && (
+            <div className="flex justify-end mt-8">
+              {getPaginationControls(page, totalPages, (page) =>
+                dispatch(setPage(page))
               )}
             </div>
           )}
-        </div>
-      ))}
-      <div className="flex justify-end mt-8">
-        {getPaginationControls(page, totalPages, (page) =>
-          dispatch(setPage(page))
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };
