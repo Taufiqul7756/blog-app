@@ -62,7 +62,7 @@ const Timeline = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="lg:px-32 md:px-10 sm:px-5">
+    <div className="lg:px-32 md:px-10 sm:px-5 w-2/3">
       {posts.map((post) => (
         <div key={post.id} className="bg-white p-4 rounded shadow mb-4">
           <div className="grid gap-2">
